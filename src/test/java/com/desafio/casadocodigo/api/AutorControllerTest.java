@@ -23,7 +23,7 @@ class AutorControllerTest {
 	
 	@Test
 	public void shouldSaveAutor() throws Exception {
-		AutorDto autor = new AutorDto(null,"Cleber Teste", "cleber@email.com","livro teste", null);
+		AutorDto autor = new AutorDto(null,"Cleber Teste", "cleber@email.com","livro teste");
 		String content = new ObjectMapper().writeValueAsString(autor);
 		this.mockMvc.perform(post("/autor")
 							.content(content)
@@ -36,7 +36,7 @@ class AutorControllerTest {
 	
 	@Test
 	public void shouldNotSaveAutor() throws Exception {
-		AutorDto autor = new AutorDto(null,"", "cleber@email.com","livro teste", null);
+		AutorDto autor = new AutorDto(null,"", "cleber@email.com","livro teste");
 		String content = new ObjectMapper().writeValueAsString(autor);
 		this.mockMvc.perform(post("/autor")
 				.content(content)

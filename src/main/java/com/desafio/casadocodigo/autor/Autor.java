@@ -1,6 +1,5 @@
 package com.desafio.casadocodigo.autor;
 
-import java.time.Instant;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,9 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import org.springframework.lang.NonNull;
 
@@ -37,21 +33,16 @@ public class Autor {
 	private Long id;
 	
 	@Column(nullable=false)
-	@NotBlank(message = "Campo Nome, é Obrigatório")
 	private String nome;
 	
 	@Column
-	@Email(message = "Formato do email é inválido")
-	@NotBlank(message = "Campo Email, é Obrigatório")
 	private String email;
 	
 	@Column(nullable=false, length=400)
-	@NotBlank(message = "Campo Descrição, é Obrigatório")
-	@Size(max = 400)
 	private String descricao;
 	
+	@Column(nullable=false)
 	@NonNull
-	@Column
 	private Date criadoEm;
 	
 	public Autor(String nome, String email, String descricao, Date criadoEm) {
