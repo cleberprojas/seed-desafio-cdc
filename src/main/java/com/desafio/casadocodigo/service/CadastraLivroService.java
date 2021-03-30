@@ -1,32 +1,29 @@
 package com.desafio.casadocodigo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Service;
 
-import com.desafio.casadocodigo.autor.AutorRepository;
-import com.desafio.casadocodigo.categoria.CategoriaRepository;
+import com.desafio.casadocodigo.autor.Autor;
+import com.desafio.casadocodigo.categoria.Categoria;
 import com.desafio.casadocodigo.livro.LivroDto;
-import com.desafio.casadocodigo.livro.LivroRepository;
 
 @Service
 public class CadastraLivroService {
 	
-	@Autowired
-	private AutorRepository autorRepo;
+	@PersistenceContext
+	private EntityManager entityManager;//1
 	
-	@Autowired
-	private CategoriaRepository categoriaRepo;
-	
-	@Autowired
-	private LivroRepository livroRepo;
-	
+	//1
 	public LivroDto cadastra(LivroDto livroDto) {
-		var autor = autorRepo.findById(livroDto.getAutor().getId());
-		var categoria = categoriaRepo.findById(livroDto.getCategoria().getId());
+		var autor = entityManager.find(Autor.class, livroDto.getAutor().getId());//1
+		var categoria = entityManager.find(Categoria.class, livroDto.getCategoria().getId());//1
 		var livro = livroDto.toLivroObject();
-		autor.ifPresentOrElse(livro::setAutor, IllegalArgumentException::new);
-		categoria.ifPresentOrElse(livro::setCategoria, IllegalArgumentException::new);
-		return new LivroDto(livroRepo.save(livro));
+		livro.setAutor(autor);
+		livro.setCategoria(categoria);
+		entityManager.persist(livro);//1
+		return new LivroDto(livro);
 	}
 
 }
