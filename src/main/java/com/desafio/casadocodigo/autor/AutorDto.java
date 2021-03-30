@@ -1,13 +1,12 @@
 package com.desafio.casadocodigo.autor;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import org.springframework.lang.NonNull;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,9 +16,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class AutorDto implements Serializable{
+public class AutorDto{
 	
-	private static final long serialVersionUID = -8786917814703670926L;
 	private Long id;
 	
 	@NotBlank(message = "Campo Nome, é Obrigatório")

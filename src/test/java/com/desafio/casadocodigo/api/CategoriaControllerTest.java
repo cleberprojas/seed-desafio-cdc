@@ -12,20 +12,22 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.desafio.casadocodigo.autor.AutorDto;
+import com.desafio.casadocodigo.categoria.CategoriaDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AutorControllerTest {
+class CategoriaControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@Test
-	public void shouldSaveAutor() throws Exception {
-		AutorDto autor = new AutorDto(null,"Cleber Teste", "cleber@email.com","livro teste");
-		String content = new ObjectMapper().writeValueAsString(autor);
-		this.mockMvc.perform(post("/autor")
+	public void shouldSaveCategoria() throws Exception {
+		CategoriaDto categoriaRequest = new CategoriaDto(null,"Ficcao");
+		
+		String content = new ObjectMapper().writeValueAsString(categoriaRequest);
+		this.mockMvc.perform(post("/categorias")
 							.content(content)
 							.contentType(MediaType.APPLICATION_JSON)
 						    .accept(MediaType.APPLICATION_JSON)
@@ -35,10 +37,10 @@ class AutorControllerTest {
 	}
 	
 	@Test
-	public void shouldNotSaveAutor() throws Exception {
-		AutorDto autor = new AutorDto(null,"", "cleber@email.com","livro teste");
-		String content = new ObjectMapper().writeValueAsString(autor);
-		this.mockMvc.perform(post("/autor")
+	public void shouldNotSaveCategoria() throws Exception {
+		CategoriaDto categoriaRequest = new CategoriaDto(null,"");
+		String content = new ObjectMapper().writeValueAsString(categoriaRequest);
+		this.mockMvc.perform(post("/categorias")
 				.content(content)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
@@ -48,10 +50,10 @@ class AutorControllerTest {
 	}
 	
 	@Test
-	public void emailShouldBeUnique() throws Exception {
-		AutorDto autor = new AutorDto(null,"teste", "cleber@email.com","livro teste");
-		String content = new ObjectMapper().writeValueAsString(autor);
-		this.mockMvc.perform(post("/autor")
+	public void categoriaShouldBeUnique() throws Exception {
+		CategoriaDto categoriaRequest = new CategoriaDto(null,"Ficcao");
+		String content = new ObjectMapper().writeValueAsString(categoriaRequest);
+		this.mockMvc.perform(post("/categorias")
 				.content(content)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
