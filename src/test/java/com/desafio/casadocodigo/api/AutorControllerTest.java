@@ -3,6 +3,8 @@ package com.desafio.casadocodigo.api;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,7 +25,8 @@ class AutorControllerTest {
 	
 	@Test
 	public void shouldSaveAutor() throws Exception {
-		AutorDto autor = new AutorDto(null,"Cleber Teste", "cleber@email.com","livro teste");
+		var uuid = UUID.randomUUID();
+		AutorDto autor = new AutorDto(null,"Cleber Teste ", uuid+"@email.com","livro teste");
 		String content = new ObjectMapper().writeValueAsString(autor);
 		this.mockMvc.perform(post("/autor")
 							.content(content)

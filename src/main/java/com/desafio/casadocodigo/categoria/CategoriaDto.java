@@ -2,6 +2,8 @@ package com.desafio.casadocodigo.categoria;
 
 import javax.validation.constraints.NotBlank;
 
+import com.desafio.casadocodigo.validator.UniqueValue;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +16,11 @@ public class CategoriaDto {
 	private Long id;
 	
 	@NotBlank(message = "nome não pode ser vazio")
+	@UniqueValue(domainClass = Categoria.class, fieldName = "nome",message = "Esse nome já está em uso")
 	private String nome;
 	
 	public Categoria toCategoriaObject(){
-		return new Categoria(this.id, this.nome);
+		return new Categoria(this.nome);
 	}
 	
 	public CategoriaDto(Categoria categoria) {

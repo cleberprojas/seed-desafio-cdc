@@ -8,7 +8,12 @@ import org.springframework.validation.Validator;
 import com.desafio.casadocodigo.categoria.CategoriaDto;
 import com.desafio.casadocodigo.categoria.CategoriaRepository;
 
+/***
+ * 
+ * use @UniqueValue 
+ * */
 @Component
+@Deprecated
 public class CategoriaNomeValidator implements Validator {
 	
 	@Autowired

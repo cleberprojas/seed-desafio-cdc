@@ -15,27 +15,42 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ValidationErrorHandler {
-	
+
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ErrorMessage validationErrorException(BindException exception) {
 		Map<String, List<?>> errorsMap = buildErrorDescription(exception);
-    	return new ErrorMessage("Validation Failed", errorsMap.toString(), HttpStatus.BAD_REQUEST.value(), new Date());
+		return new ErrorMessage("Validation Failed", errorsMap.toString(), HttpStatus.BAD_REQUEST.value(), new Date());
 	}
-	
+
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ErrorMessage illegalArgumentErrorException(Exception exception) {
-    	return new ErrorMessage("Validation Failed", exception.getMessage(), HttpStatus.BAD_REQUEST.value(), new Date());
+		return new ErrorMessage("Validation Failed ",
+				exception.getCause().getMessage(),
+				HttpStatus.BAD_REQUEST.value(), new Date());
+	}
+
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(IllegalStateException.class)
+	public ErrorMessage illegalStateErrorException(Exception exception) {
+		return new ErrorMessage("Validation Failed", exception.getCause().getMessage(), HttpStatus.BAD_REQUEST.value(), new Date());
 	}
 
 	private Map<String, List<?>> buildErrorDescription(BindException exception) {
-		List<String> fieldErrors = exception.getBindingResult().getFieldErrors().stream().map(err-> err.getField()+ ": "+ err.getDefaultMessage()).collect(Collectors.toList());
-    	List<String> globalErrors = exception.getBindingResult().getGlobalErrors().stream().map(err-> err.getObjectName() + ": "+ err.getDefaultMessage()).collect(Collectors.toList());
-    	
-    	Map<String, List<?>> errorsMap = new HashMap<>();
-    	errorsMap.put("Field Errors", fieldErrors);
-    	errorsMap.put("Global Errors", globalErrors);
+		Map<String, List<?>> errorsMap = new HashMap<>();
+		errorsMap.put("Field Errors",  buildFieldErrors(exception));
+		errorsMap.put("Global Errors", buildGlobalErrors(exception));
 		return errorsMap;
+	}
+
+	private List<String> buildGlobalErrors(BindException exception) {
+		return exception.getBindingResult().getGlobalErrors().stream()
+				.map(err -> err.getObjectName() + ": " + err.getDefaultMessage()).collect(Collectors.toList());
+	}
+
+	private List<String> buildFieldErrors(BindException exception) {
+		return exception.getBindingResult().getFieldErrors().stream()
+				.map(err -> err.getField() + ": " + err.getDefaultMessage()).collect(Collectors.toList());
 	}
 }

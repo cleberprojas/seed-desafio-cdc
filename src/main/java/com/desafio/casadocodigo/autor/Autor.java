@@ -1,14 +1,17 @@
 package com.desafio.casadocodigo.autor;
 
 import java.util.Date;
+import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.springframework.lang.NonNull;
+
+import com.desafio.casadocodigo.base.BaseEntity;
+import com.desafio.casadocodigo.livro.Livro;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,11 +29,7 @@ import lombok.Setter;
  **/
 @Entity
 @Getter @Setter @NoArgsConstructor
-public class Autor {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class Autor extends BaseEntity{
 	
 	@Column(nullable=false)
 	private String nome;
@@ -44,6 +43,10 @@ public class Autor {
 	@Column(nullable=false)
 	@NonNull
 	private Date criadoEm;
+	
+	@OneToMany(cascade=ALL, mappedBy="autor")
+    private List<Livro> livros;
+
 	
 	public Autor(String nome, String email, String descricao, Date criadoEm) {
 		this.nome = nome;

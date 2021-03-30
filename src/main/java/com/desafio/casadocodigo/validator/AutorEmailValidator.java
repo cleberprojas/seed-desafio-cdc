@@ -8,7 +8,12 @@ import org.springframework.validation.Validator;
 import com.desafio.casadocodigo.autor.AutorDto;
 import com.desafio.casadocodigo.autor.AutorRepository;
 
+/***
+ * 
+ * use @UniqueValue 
+ * */
 @Component
+@Deprecated
 public class AutorEmailValidator implements Validator {
 	
 	@Autowired

@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.UniqueElements;
+import com.desafio.casadocodigo.validator.UniqueValue;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +25,7 @@ public class AutorDto{
 	
 	@Email(message = "Formato do email é inválido")
 	@NotBlank(message = "Campo Email, é Obrigatório")
+	@UniqueValue(domainClass = Autor.class, fieldName = "email", message = "Esse email já está em uso")
 	private String email;
 	
 	@NotBlank(message = "Campo Descrição, é Obrigatório")
