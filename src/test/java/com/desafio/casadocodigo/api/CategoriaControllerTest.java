@@ -26,7 +26,7 @@ class CategoriaControllerTest {
 	@Test
 	public void shouldSaveCategoria() throws Exception {
 		var uuid = UUID.randomUUID();
-		CategoriaDto categoriaRequest = new CategoriaDto(null, uuid.toString());
+		CategoriaDto categoriaRequest = new CategoriaDto(uuid.toString());
 		String content = new ObjectMapper().writeValueAsString(categoriaRequest);
 		this.mockMvc.perform(post("/categorias")
 							.content(content)
@@ -39,7 +39,7 @@ class CategoriaControllerTest {
 	
 	@Test
 	public void shouldNotSaveCategoria() throws Exception {
-		CategoriaDto categoriaRequest = new CategoriaDto(null,"");
+		CategoriaDto categoriaRequest = new CategoriaDto("");
 		String content = new ObjectMapper().writeValueAsString(categoriaRequest);
 		this.mockMvc.perform(post("/categorias")
 				.content(content)
@@ -52,7 +52,7 @@ class CategoriaControllerTest {
 	
 	@Test
 	public void categoriaShouldBeUnique() throws Exception {
-		CategoriaDto categoriaRequest = new CategoriaDto(null,"Ficcao");
+		CategoriaDto categoriaRequest = new CategoriaDto("Ficcao");
 		String content = new ObjectMapper().writeValueAsString(categoriaRequest);
 		this.mockMvc.perform(post("/categorias")
 				.content(content)

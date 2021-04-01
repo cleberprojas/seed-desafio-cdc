@@ -26,7 +26,7 @@ class AutorControllerTest {
 	@Test
 	public void shouldSaveAutor() throws Exception {
 		var uuid = UUID.randomUUID();
-		AutorDto autor = new AutorDto(null,"Cleber Teste ", uuid+"@email.com","livro teste");
+		AutorDto autor = new AutorDto("Cleber Teste ", uuid+"@email.com","livro teste");
 		String content = new ObjectMapper().writeValueAsString(autor);
 		this.mockMvc.perform(post("/autor")
 							.content(content)
@@ -39,7 +39,7 @@ class AutorControllerTest {
 	
 	@Test
 	public void shouldNotSaveAutor() throws Exception {
-		AutorDto autor = new AutorDto(null,"", "cleber@email.com","livro teste");
+		AutorDto autor = new AutorDto("", "cleber@email.com","livro teste");
 		String content = new ObjectMapper().writeValueAsString(autor);
 		this.mockMvc.perform(post("/autor")
 				.content(content)
@@ -52,7 +52,7 @@ class AutorControllerTest {
 	
 	@Test
 	public void emailShouldBeUnique() throws Exception {
-		AutorDto autor = new AutorDto(null,"teste", "cleber@email.com","livro teste");
+		AutorDto autor = new AutorDto("teste", "cleber@email.com","livro teste");
 		String content = new ObjectMapper().writeValueAsString(autor);
 		this.mockMvc.perform(post("/autor")
 				.content(content)
