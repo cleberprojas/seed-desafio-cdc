@@ -7,9 +7,9 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.util.Assert;
 
-import com.desafio.casadocodigo.base.BaseDto;
+import com.desafio.casadocodigo.base.Validatable;
 
-public class MustExistValidator  implements ConstraintValidator<MustExist, Object> {
+public class MustExistValidator  implements ConstraintValidator<MustExistId, Validatable> {
 
 	@PersistenceContext
 	private EntityManager manager;
@@ -18,17 +18,17 @@ public class MustExistValidator  implements ConstraintValidator<MustExist, Objec
 	private Class<?> clazz;
 	
 	@Override
-	public void initialize(MustExist constraintAnnotation) {
+	public void initialize(MustExistId constraintAnnotation) {
 		this.domainAttribute = constraintAnnotation.fieldName();
 		this.clazz = constraintAnnotation.domainClass();
 	}
 	
 	@Override
-	public boolean isValid(Object value, ConstraintValidatorContext context) {
-		return this.doCheckIsValid((BaseDto)value);
+	public boolean isValid(Validatable value, ConstraintValidatorContext context) {
+		return this.doCheckIsValid(value);
 	}
 	
-	private boolean doCheckIsValid(BaseDto value) {
+	private boolean doCheckIsValid(Validatable value) {
 		var query = manager.createQuery("Select 1 from "+clazz.getName()+ " where "+domainAttribute+" = :value");
 		query.setParameter("value", value.getId());
 		var result = query.getResultList();

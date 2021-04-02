@@ -2,7 +2,7 @@ package com.desafio.casadocodigo.pais;
 
 import javax.validation.constraints.NotBlank;
 
-import com.desafio.casadocodigo.base.BaseDto;
+import com.desafio.casadocodigo.base.Validatable;
 import com.desafio.casadocodigo.validator.UniqueValue;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +13,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class PaisDto extends BaseDto {
+public class PaisDto implements Validatable{
+	
+	private Long id;
 	
 	@NotBlank
 	@UniqueValue(domainClass = Pais.class, fieldName = "nome")

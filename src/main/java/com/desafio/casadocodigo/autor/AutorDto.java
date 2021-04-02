@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.desafio.casadocodigo.base.BaseDto;
+import com.desafio.casadocodigo.base.Validatable;
 import com.desafio.casadocodigo.validator.UniqueValue;
 
 import lombok.AllArgsConstructor;
@@ -17,8 +17,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class AutorDto extends BaseDto{
+public class AutorDto implements Validatable{
 	
+	private Long id;
 	
 	@NotBlank(message = "Campo Nome, é Obrigatório")
 	private String nome;

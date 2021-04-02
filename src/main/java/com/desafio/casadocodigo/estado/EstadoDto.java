@@ -3,10 +3,10 @@ package com.desafio.casadocodigo.estado;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.desafio.casadocodigo.base.BaseDto;
+import com.desafio.casadocodigo.base.Validatable;
 import com.desafio.casadocodigo.pais.Pais;
 import com.desafio.casadocodigo.pais.PaisDto;
-import com.desafio.casadocodigo.validator.MustExist;
+import com.desafio.casadocodigo.validator.MustExistId;
 import com.desafio.casadocodigo.validator.UniqueValue;
 
 import lombok.AllArgsConstructor;
@@ -17,15 +17,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter@Getter
-public class EstadoDto extends BaseDto{
+public class EstadoDto implements Validatable{
 	
+	private Long id;
 	
 	@NotBlank
 	@UniqueValue(domainClass = Estado.class, fieldName = "nome")
 	private String nome;
 	
 	@NotNull
-	@MustExist(domainClass = Pais.class)
+	@MustExistId(domainClass = Pais.class)
 	private PaisDto pais;
 	
 	public EstadoDto(Estado estado) {

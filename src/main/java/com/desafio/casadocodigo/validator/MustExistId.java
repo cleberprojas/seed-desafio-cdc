@@ -14,7 +14,7 @@ import javax.validation.Payload;
 @Retention(RUNTIME)
 @Target({FIELD})
 @Constraint(validatedBy = {MustExistValidator.class})
-public @interface MustExist {
+public @interface MustExistId {
 	
 	String message() default "{com.desafio.casadocodigo.validator.mustExist}";
 	Class<?>[] groups() default { };

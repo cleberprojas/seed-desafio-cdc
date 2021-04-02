@@ -11,10 +11,10 @@ import javax.validation.constraints.Size;
 
 import com.desafio.casadocodigo.autor.Autor;
 import com.desafio.casadocodigo.autor.AutorDto;
-import com.desafio.casadocodigo.base.BaseDto;
+import com.desafio.casadocodigo.base.Validatable;
 import com.desafio.casadocodigo.categoria.Categoria;
 import com.desafio.casadocodigo.categoria.CategoriaDto;
-import com.desafio.casadocodigo.validator.MustExist;
+import com.desafio.casadocodigo.validator.MustExistId;
 import com.desafio.casadocodigo.validator.UniqueValue;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -27,7 +27,9 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LivroDto extends BaseDto{
+public class LivroDto implements Validatable{
+	
+	private Long id;
 	
 	@NotBlank
 	@UniqueValue(domainClass = Livro.class, fieldName = "titulo", message="Titulo deve ser único")
@@ -60,12 +62,12 @@ public class LivroDto extends BaseDto{
 	
 	@NotNull
 	@JsonInclude(Include.NON_NULL)
-	@MustExist(domainClass = Categoria.class)
+	@MustExistId(domainClass = Categoria.class)
 	private CategoriaDto categoria;
 	
 	@NotNull
 	@JsonInclude(Include.NON_NULL)
-	@MustExist(domainClass = Autor.class)
+	@MustExistId(domainClass = Autor.class)
 	private AutorDto autor;
 	
 	public Livro toLivroObject() {
@@ -102,4 +104,5 @@ public class LivroDto extends BaseDto{
 				+ preco + ", numPaginas=" + numPaginas + ", isbn=" + isbn + ", dataLancamento=" + dataLancamento
 				+ ", categoria=" + categoria + ", autor=" + autor + "]";
 	}
+
 }

@@ -2,7 +2,7 @@ package com.desafio.casadocodigo.categoria;
 
 import javax.validation.constraints.NotBlank;
 
-import com.desafio.casadocodigo.base.BaseDto;
+import com.desafio.casadocodigo.base.Validatable;
 import com.desafio.casadocodigo.validator.UniqueValue;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class CategoriaDto extends BaseDto {
+public class CategoriaDto implements Validatable{
+	
+	private Long id;
 	
 	@NotBlank(message = "nome não pode ser vazio")
 	@UniqueValue(domainClass = Categoria.class, fieldName = "nome",message = "Esse nome já está em uso")
